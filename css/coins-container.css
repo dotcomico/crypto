@@ -1,0 +1,43 @@
+       #coinsContainer {
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 100%;
+            height: auto;
+            padding: 1rem;
+            /* background-color: red; */
+        }
+
+        .coin-card {
+            display: grid;
+            grid-template-columns: 4fr 1fr;
+            width: 100%;
+            height: auto;
+            padding: 1rem;
+            background-color: whitesmoke;
+            /* border: 1px solid black; */
+            border-radius: 1.2rem;
+            transition: 0.3s;
+        }
+
+        .coin-card:hover {
+            transform: translateY(-0.5rem);
+            border: 1px solid darkblue;
+        }
+
+        .coin-card>div:first-child>button {
+            margin-top: 1rem;
+        }
+
+        .coin-card>div:last-child {
+            width: auto;
+            height: auto;
+            display: flex;
+            justify-content: right;
+            /* background-color: brown; */
+        }
+
+        .switch {
+            scale: 1.7;
+        }
