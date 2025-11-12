@@ -1,9 +1,10 @@
 @media (min-width: 768px) {
   #coinsContainer {
     flex-direction: row;
+    justify-content: space-evenly;
   }
 
   .coin-card {
-    flex: 1 1 calc(33.333% - 1rem);
+    width: 24%;
   }
 }
