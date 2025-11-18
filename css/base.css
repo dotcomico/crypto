@@ -6,3 +6,9 @@ html {
   height: 100vh;
   font-family: "Paytone One", sans-serif;
 }
+.wrapper{
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  perspective: 10px;
+}

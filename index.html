@@ -12,38 +12,45 @@
     <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/coins-container.css">
+    <link rel="stylesheet" href="css/section/main-section.css">
+    <link rel="stylesheet" href="css/section/coins-container.css">
     <link rel="stylesheet" href="css/responsive.css">
 
 </head>
 
 <body>
-    <header id="header">
-        <h1>Crypto Tracker</h1>
-        <h2>Real-time digital currency tracking</h2>
-    </header>
-    <main>
-        <h2>Coins</h2>
-        <div id="coinsContainer">
-            <div class="coin-card"></div>
-            <div class="coin-card"></div>
-            <div class="coin-card"></div>
-
-            <div class="coin-card">
-                <div>
-                    <h3>Tag</h3>
-                    <div>Name</div>
-                    <button type="button" class="btn btn-primary">More info</button>
-                </div>
-                <div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input switch" type="checkbox" role="switch" id="switchCheckDefault">
+    <div id="topBar"></div>
+    <div class="wrapper">
+        <header id="header">
+            <img src="Image/crypto.JPG" alt="city background" class="background">
+            <!-- <img src="Image/spaceship.png" alt="coins" class="foreground"> -->
+            <h1 class="title">Crypto Tracker</h1>
+            <h2 class="inner-title">Real-time digital currency tracking</h2>
+        </header>
+        
+        <section>
+            <h2>Coins</h2>
+            <div id="coinsContainer">
+                <div class="coin-card"></div>
+                <div class="coin-card"></div>
+                <div class="coin-card"></div>
+                
+                <div class="coin-card">
+                    <div>
+                        <h3>Tag</h3>
+                        <div>Name</div>
+                        <button type="button" class="btn btn-primary">More info</button>
+                    </div>
+                    <div>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input switch" type="checkbox" role="switch" id="switchCheckDefault">
+                        </div>
                     </div>
                 </div>
+                
             </div>
-
-        </div>
-    </main>
-</body>
+        </section>
+    </div>
+    </body>
 
 </html>
