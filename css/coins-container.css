@@ -1,44 +1,44 @@
-       #coinsContainer {
-            display: flex;
-            flex-direction: column;
-            flex-wrap: wrap;
-            gap: 1rem;
-            width: 100%;
-            height: auto;
-            padding: 1rem;
-            /* background-color: red; */
-        }
+#coinsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 1rem;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  /* background-color: red; */
+}
 
-        .coin-card {
-            display: grid;
-            grid-template-columns: 4fr 1fr;
-            width: 100%;
-            height: auto;
-            padding: 1rem;
-            background-color: white;
-            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.08);
-            /* border: 1px solid black; */
-            border-radius: 1.2rem;
-            transition: 0.5s;
-        }
+.coin-card {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  background-color: white;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.08);
+  /* border: 1px solid black; */
+  border-radius: 1.2rem;
+  transition: 0.5s;
+}
 
-        .coin-card:hover {
-            transform: translateY(-0.3rem);
-            border: 1px solid darkblue;
-        }
+.coin-card:hover {
+  transform: translateY(-0.3rem);
+  border: 1px solid darkblue;
+}
 
-        .coin-card>div:first-child>button {
-            margin-top: 1rem;
-        }
+.coin-card > div:first-child > button {
+  margin-top: 1rem;
+}
 
-        .coin-card>div:last-child {
-            width: auto;
-            height: auto;
-            display: flex;
-            justify-content: right;
-            /* background-color: brown; */
-        }
+.coin-card > div:last-child {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: right;
+  /* background-color: brown; */
+}
 
-        .switch {
-            scale: 1.7;
-        }
+.switch {
+  scale: 1.7;
+}
