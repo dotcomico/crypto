@@ -1,5 +1,7 @@
 section {
   min-height: 100vh;
-  padding: 2rem;
   background-color: rgb(244, 244, 244);
+}
+section>div{
+  padding: 2rem;
 }
