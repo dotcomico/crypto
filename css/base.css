@@ -1,3 +1,15 @@
+:root {
+  --primary-color:  rgb(244, 244, 244);
+  --secondary-color: white;
+  --tertiary-color: rgb(0, 47, 255);
+
+    --primary-text:  black;
+  --secondary-text: rgb(75, 75, 75);
+  --tertiary-text: rgb(79, 79, 79);
+
+  --font-family: "Paytone One", sans-serif;
+  /* --spacing-unit: 0.5rem , 1rem , 1.2rem; */
+}
 body,
 html {
   margin: 0;
@@ -6,7 +18,7 @@ html {
   height: 100vh;
   font-family: "Paytone One", sans-serif;
 }
-.wrapper{
+.wrapper {
   height: 100vh;
   overflow-y: auto;
   overflow-x: hidden;

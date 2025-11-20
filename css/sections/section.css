@@ -1,6 +1,6 @@
 section {
   min-height: 100vh;
-  background-color: rgb(244, 244, 244);
+  background-color: var(--primary-color);
 }
 section>div{
   padding: 2rem;
