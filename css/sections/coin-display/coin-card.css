@@ -12,7 +12,7 @@
   color: var(--primary-text);
 }
 .card-text{
-  color: var(--secondary-text);
+  color: var( --secondary-text);
 }
 .switch {
   scale: 1.5;

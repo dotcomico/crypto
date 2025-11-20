@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/sections/section.css">
     <link rel="stylesheet" href="css/sections/coin-display/coin-card.css">
+    <link rel="stylesheet" href="css/sections/coin-display/display.css">
+    <link rel="stylesheet" href="css/sections/live-reports-display/display.css">
+    <link rel="stylesheet" href="css/sections/about-display/display.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 
@@ -35,7 +38,7 @@
         </header>
 
         <section>
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#">
                         <img src="Image/coins-solid-full.svg" alt="Bootstrap" width="30" height="24">
@@ -47,13 +50,13 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
+                            <li id="coinsNav" class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#">Coins</a>
                             </li>
-                            <li class="nav-item">
+                            <li id="LiveReportsNav" class="nav-item">
                                 <a class="nav-link" href="#">Live Reports</a>
                             </li>
-                            <li class="nav-item">
+                            <li id="aboutNav" class="nav-item">
                                 <a class="nav-link" href="#">About</a>
                             </li>
                         </ul>
@@ -62,8 +65,17 @@
             </nav>
 
             <!-- Display Views -->
-            <div id="coins-display">
+            <div id="coinsDisplay" class="display-section">
                 <h2>Coins</h2>
+
+                <div class="container-fluid">
+                    <form class="d-flex" role="search">
+                        <input class="form-control me-2 rounded-pill p-2" type="search" placeholder="Search"
+                            aria-label="Search" />
+                        <button class="btn btn-outline-success rounded-pill" type="submit">Search</button>
+                    </form>
+                </div>
+
                 <div class="row g-4" id="coinsGrid">
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                         <div class="card coin-card">
@@ -85,11 +97,11 @@
                 </div>
             </div>
 
-            <div id="liveReports" class="view d-none">
+            <div id="liveReportsDisplay" class="display-section">
                 <!-- live reports -->
             </div>
 
-            <div id="aboutView" class="view d-none">
+            <div id="aboutDisplay" class="display-section">
                 <!-- about -->
             </div>
         </section>
@@ -97,8 +109,34 @@
 
     <script>
         $(() => {
-            const $coinsDisply = $('#coins-display');
+            // Nav
+            const $coinsNav = $('#coinsNav');
+            const $LiveReportsNav = $('#LiveReportsNav');
+            const $aboutNav = $('#aboutNav');
+
+            // Displays
+            const $coinsDisplay = $('#coinsDisplay');
+            const $liveReportsDisplay = $('#liveReportsDisplay');
+            const $aboutDisplay = $('#aboutDisplay');
+
             const $coinsContainer = $('#coinsGrid');
+
+
+            $coinsNav.on('click', function () {
+                showSection($coinsDisplay);
+            });
+            $LiveReportsNav.on('click', function () {
+                showSection($liveReportsDisplay);
+            });
+            $aboutNav.on('click', function () {
+                showSection($aboutDisplay);
+            });
+
+
+            function showSection(sectionToShow) {
+                $(".display-section").hide();
+                sectionToShow.show();
+            }
 
         });
     </script>
