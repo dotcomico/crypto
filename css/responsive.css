@@ -1,13 +1,4 @@
 @media (min-width: 768px) {
-  #coinsContainer {
-    flex-direction: row;
-    justify-content: space-evenly;
-  }
-
-  .coin-card {
-    width: 24%;
-  }
-
   #header {
     height: 70vh;
   }

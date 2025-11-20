@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,8 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Paytone+One&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/header.css">
-    <link rel="stylesheet" href="css/section/main-section.css">
-    <link rel="stylesheet" href="css/section/coins-container.css">
+    <link rel="stylesheet" href="css/sections/main-section.css">
+    <link rel="stylesheet" href="css/sections/coin disply/coin-card.css">
     <link rel="stylesheet" href="css/responsive.css">
 
 </head>
@@ -27,30 +29,39 @@
             <h1 class="title">Crypto Tracker</h1>
             <h2 class="inner-title">Real-time digital currency tracking</h2>
         </header>
-        
+
         <section>
-            <h2>Coins</h2>
-            <div id="coinsContainer">
-                <div class="coin-card"></div>
-                <div class="coin-card"></div>
-                <div class="coin-card"></div>
-                
-                <div class="coin-card">
-                    <div>
-                        <h3>Tag</h3>
-                        <div>Name</div>
-                        <button type="button" class="btn btn-primary">More info</button>
-                    </div>
-                    <div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input switch" type="checkbox" role="switch" id="switchCheckDefault">
+            <div id="coins-display">
+                <h2>Coins</h2>
+                <div class="row g-4" id="coinsGrid">
+                    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
+                        <div class="card coin-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5 class="card-title">Tag</h5>
+                                        <p class="card-text">Name</p>
+                                        <button type="button" class="btn btn-primary btn-sm">More info</button>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input switch" type="checkbox" role="switch"
+                                            id="switchCheckDefault">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
             </div>
         </section>
     </div>
-    </body>
+
+    <script>
+        $(() => {
+            const $coinsContainer = $('#coinsContainer');
+
+        });
+    </script>
+</body>
 
 </html>

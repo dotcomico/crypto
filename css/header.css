@@ -37,9 +37,16 @@
 .title,
 .inner-title {
   color: white;
-    font-size: 2em;
-   text-shadow: 2px 2px 4px red; /* Horizontal, Vertical, Blur, Color */
-    /* transform: translateZ(-5px) scale(1);
-    margin: 1rem; */
+    font-size: 1em;
+   text-shadow: 2px 4px 6px rgb(34, 34, 34); /* Horizontal, Vertical, Blur, Color */
+    transform: translateZ(-5px) scale(1);
     text-align: center;
+}
+
+.title{
+ transform: translateZ(-5px) scale(1.5);
+}
+.inner-title {
+    transform: translateZ(-5px) scale(0.6);
+    margin: 1rem;
 }
