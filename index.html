@@ -77,6 +77,7 @@
                 </div>
 
                 <div class="row g-4" id="coinsGrid">
+
                     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12">
                         <div class="card coin-card">
                             <div class="card-body">
@@ -84,26 +85,35 @@
                                     <div>
                                         <h5 class="card-title">Tag</h5>
                                         <p class="card-text">Name</p>
-                                        <button type="button" class="btn btn-primary btn-sm">More info</button>
+                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseView" aria-expanded="false"
+                                            aria-controls="collapseView">More info</button>
                                     </div>
                                     <div class="form-check form-switch">
                                         <input class="form-check-input switch" type="checkbox" role="switch"
                                             id="switchCheckDefault">
                                     </div>
                                 </div>
+                                <div class="collapse" id="collapseView">
+                                    <div class="card card-body">
+                                        Some placeholder content for the collapse component. This panel is hidden by
+                                        default but revealed when the user activates the relevant trigger.
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
-            </div>
 
-            <div id="liveReportsDisplay" class="display-section">
-                <!-- live reports -->
-            </div>
+                <div id="liveReportsDisplay" class="display-section">
+                    <!-- live reports -->
+                </div>
 
-            <div id="aboutDisplay" class="display-section">
-                <!-- about -->
-            </div>
+                <div id="aboutDisplay" class="display-section">
+                    <!-- about -->
+                </div>
         </section>
     </div>
 
@@ -121,7 +131,7 @@
 
             const $coinsContainer = $('#coinsGrid');
 
-
+            // Events
             $coinsNav.on('click', function () {
                 showSection($coinsDisplay);
             });
@@ -132,7 +142,7 @@
                 showSection($aboutDisplay);
             });
 
-
+            // Functions
             function showSection(sectionToShow) {
                 $(".display-section").hide();
                 sectionToShow.show();
