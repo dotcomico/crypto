@@ -181,6 +181,11 @@
             function addCoinCard(coin, index) {
                 // הגדרת כרטיס
                 let Card = $('<div>').addClass('col-xl-3 col-lg-4 col-md-6 col-sm-12');
+                let inlineCard = $('<div>').addClass('card coin-card');
+                let cardBody = $('<div>').addClass('card-body');
+
+                let flexDisplay = $('<div>').addClass('d-flex justify-content-between align-items-start');
+                    
                 //הגדרת כפתור
                 let moreInfoBtn = $('<button>')
                     .addClass('btn-more-info btn btn-primary btn-sm rounded-pill')
@@ -204,40 +209,30 @@
                         .catch(err => alert('"More info" API error:' + err));
                 });
 
-                Card.append(`
-                    <div class="card coin-card">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-start">
+
+
+                let dataDiv = $('<div>').html(` 
                                     <div>
                                         <h5 class="card-title">${coin.symbol}</h5>
                                         <p class="card-text">${coin.name}</p>
-                                        <div class="btn-placeholder"></div>
-                                    </div>
-                                    <div class="form-check form-switch">
-                                        <input class="form-check-input switch" type="checkbox" role="switch"
-                                            id="switchCheckDefault">
-                                    </div>
-                                </div>
-                                <div class="collapse collapseView" id="collapseView${index}">
-                                    <div class=" card-body">
-                                        <img src="" alt="">
-                                        <div class="price-item">
-                                            <span>דולר (Usa): </span>
-                                            <span class="price-value"></span>
-                                        </div>
-                                        <div class="price-item">
-                                            <span class="price-label">אירו (EUR): </span>
-                                            <span class="price-value"></span>
-                                        </div>
-                                        <div class="price-item">
-                                            <span class="price-label">שקל (ILS): </span>
-                                            <span class="price-value"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                `);
+                                        <div class="btn-placeholder"></div> //!!!!!!!!!!!!!!!!
+                                    </div>`);
+
+
+                let switchInput = $('<input>').addClass('form-check-input switch').attr({
+                    'type': 'checkbox',
+                    'role': 'switch',
+                    'id': 'switchCheckDefault'
+                });
+                let switchDiv = $('<div>').addClass('form-check form-switch');
+                switchDiv.append(switchInput);
+
+                flexDisplay.append(dataDiv);
+                flexDisplay.append(switchDiv);
+
+                cardBody.append(flexDisplay)
+                inlineCard.append(cardBody);
+                Card.append(inlineCard);
 
                 Card.find('.btn-placeholder').replaceWith(moreInfoBtn);
                 $coinsContainer.append(Card);
