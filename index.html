@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
@@ -85,19 +86,32 @@
                                     <div>
                                         <h5 class="card-title">Tag</h5>
                                         <p class="card-text">Name</p>
-                                        <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="collapse"
-                                            data-bs-target="#collapseView" aria-expanded="false"
-                                            aria-controls="collapseView">More info</button>
+                                        <button type="button" class="btn-more-info btn btn-primary btn-sm rounded-pill"
+                                            data-bs-toggle="collapse" data-bs-target="#collapseView"
+                                            aria-expanded="false" aria-controls="collapseView">
+                                            <i class="bi bi-info-circle-fill"></i>
+                                            More info</button>
                                     </div>
                                     <div class="form-check form-switch">
                                         <input class="form-check-input switch" type="checkbox" role="switch"
                                             id="switchCheckDefault">
                                     </div>
                                 </div>
-                                <div class="collapse" id="collapseView">
-                                    <div class="card card-body">
-                                        Some placeholder content for the collapse component. This panel is hidden by
-                                        default but revealed when the user activates the relevant trigger.
+                                <div class="collapse collapseView" id="collapseView">
+                                    <div class=" card-body">
+                                        <img src="" alt="">
+                                        <div class="price-item">
+                                            <span>דולר (Usa): </span>
+                                            <span class="price-value"></span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span class="price-label">אירו (EUR): </span>
+                                            <span class="price-value"></span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span class="price-label">שקל (ILS): </span>
+                                            <span class="price-value"></span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -131,6 +145,8 @@
 
             const $coinsContainer = $('#coinsGrid');
 
+            getCryptoCoins();
+
             // Events
             $coinsNav.on('click', function () {
                 showSection($coinsDisplay);
@@ -148,6 +164,84 @@
                 sectionToShow.show();
             }
 
+            function getCryptoCoins() {
+                // קבלת נתונים Api
+                fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1')
+                    .then(res => res.json())
+                    .then(data => {
+                        let coins = data.slice(0, 30);
+                        coins.forEach((element, index) => {
+                            addCoinCard(element, index);
+                        });
+                    })
+                    .catch(err => alert(err));
+            }
+
+            // ({id , symbol , name})
+            function addCoinCard(coin, index) {
+                // הגדרת כרטיס
+                let Card = $('<div>').addClass('col-xl-3 col-lg-4 col-md-6 col-sm-12');
+                //הגדרת כפתור
+                let moreInfoBtn = $('<button>')
+                    .addClass('btn-more-info btn btn-primary btn-sm rounded-pill')
+                    .html(`  <i class="bi bi-info-circle-fill"></i>More info`).attr({
+                        'id': `tn-info-${index}`,
+                        type: 'button',
+                        'data-bs-toggle': 'collapse',
+                        'data-bs-target': `#collapseView${index}`,
+                        'aria-expanded': 'false',
+                        'aria-controls': 'collapseView'
+                    });
+
+                moreInfoBtn.on('click', function () {
+                    fetch(`https://api.coingecko.com/api/v3/coins/${coin.id}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            //   console.log(data.id, data.description?.en);  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                            //צור נראות לתצוגה
+                            // הצג נראות
+                        })
+                        .catch(err => alert('"More info" API error:' + err));
+                });
+
+                Card.append(`
+                    <div class="card coin-card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <h5 class="card-title">${coin.symbol}</h5>
+                                        <p class="card-text">${coin.name}</p>
+                                        <div class="btn-placeholder"></div>
+                                    </div>
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input switch" type="checkbox" role="switch"
+                                            id="switchCheckDefault">
+                                    </div>
+                                </div>
+                                <div class="collapse collapseView" id="collapseView${index}">
+                                    <div class=" card-body">
+                                        <img src="" alt="">
+                                        <div class="price-item">
+                                            <span>דולר (Usa): </span>
+                                            <span class="price-value"></span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span class="price-label">אירו (EUR): </span>
+                                            <span class="price-value"></span>
+                                        </div>
+                                        <div class="price-item">
+                                            <span class="price-label">שקל (ILS): </span>
+                                            <span class="price-value"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                `);
+
+                Card.find('.btn-placeholder').replaceWith(moreInfoBtn);
+                $coinsContainer.append(Card);
+            }
         });
     </script>
 </body>
