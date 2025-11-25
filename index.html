@@ -177,66 +177,94 @@
                     .catch(err => alert(err));
             }
 
-            // ({id , symbol , name})
             function addCoinCard(coin, index) {
-                // הגדרת כרטיס
+
                 let Card = $('<div>').addClass('col-xl-3 col-lg-4 col-md-6 col-sm-12');
+
                 let inlineCard = $('<div>').addClass('card coin-card');
                 let cardBody = $('<div>').addClass('card-body');
 
-                let flexDisplay = $('<div>').addClass('d-flex justify-content-between align-items-start');
-                    
-                //הגדרת כפתור
+                let flex = $('<div>').addClass('d-flex justify-content-between align-items-start');
+
+                //  צד שמאל #####
+                let leftDiv = $('<div>');
+                leftDiv.append(`<h5 class="card-title">${coin.symbol}</h5>`);
+                leftDiv.append(`<p class="card-text">${coin.name}</p>`);
+
+                // כפתור more info
                 let moreInfoBtn = $('<button>')
                     .addClass('btn-more-info btn btn-primary btn-sm rounded-pill')
-                    .html(`  <i class="bi bi-info-circle-fill"></i>More info`).attr({
-                        'id': `tn-info-${index}`,
+                    .attr({
                         type: 'button',
-                        'data-bs-toggle': 'collapse',
-                        'data-bs-target': `#collapseView${index}`,
-                        'aria-expanded': 'false',
-                        'aria-controls': 'collapseView'
+                    })
+                    .html(`<i class="bi bi-info-circle-fill"></i> More info`);
+
+                leftDiv.append(moreInfoBtn);
+
+                //  צד ימין ####
+                let switchDiv = $('<div>').addClass('form-check form-switch');
+
+                let switchInput = $('<input>')
+                    .addClass('form-check-input switch')
+                    .attr({
+                        type: 'checkbox',
+                        role: 'switch',
+                        id: `switchCheckDefault-${index}`
                     });
+
+                switchDiv.append(switchInput);
+
+                // חיבור שני הצדדים
+                flex.append(leftDiv);
+                flex.append(switchDiv);
+
+                // הוספה ל־card
+                cardBody.append(flex);
+
+                inlineCard.append(cardBody);
+                // inlineCard.append(collapse);
+
+                Card.append(inlineCard);
+
+                $coinsContainer.append(Card);
+
 
                 moreInfoBtn.on('click', function () {
                     fetch(`https://api.coingecko.com/api/v3/coins/${coin.id}`)
                         .then(res => res.json())
                         .then(data => {
-                            //   console.log(data.id, data.description?.en);  //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                            //צור נראות לתצוגה
-                            // הצג נראות
+                            console.log(data.id + ' ' + data.description.en);
                         })
-                        .catch(err => alert('"More info" API error:' + err));
+                        .catch(err => alert('"More info" API error: ' + err));
+
+                    let collapse = $(`<div>`);
+                    let collapseBody = $('<div>').addClass('card-body');
+                    collapseBody.append(`<img src="" alt="">`);
+                    collapseBody.append(`
+        <div class="price-item">
+            <span>dolar (Usa): </span>
+            <span class="price-value">${data.market_data.current_price.usd}</span>
+        </div>
+    `);
+                    collapseBody.append(`
+        <div class="price-item">
+            <span class="price-label">Ero (EUR): </span>
+            <span class="price-value">${data.market_data.current_price.eur}</span>
+        </div>
+    `);
+                    collapseBody.append(`
+        <div class="price-item">
+            <span class="price-label">שקל (ILS): </span>
+            <span class="price-value">${data.market_data.current_price.ils}</span>
+        </div>
+    `);
+                    collapse.append(collapseBody);
+                    inlineCard.append(collapse);
+
                 });
-
-
-
-                let dataDiv = $('<div>').html(` 
-                                    <div>
-                                        <h5 class="card-title">${coin.symbol}</h5>
-                                        <p class="card-text">${coin.name}</p>
-                                        <div class="btn-placeholder"></div> //!!!!!!!!!!!!!!!!
-                                    </div>`);
-
-
-                let switchInput = $('<input>').addClass('form-check-input switch').attr({
-                    'type': 'checkbox',
-                    'role': 'switch',
-                    'id': 'switchCheckDefault'
-                });
-                let switchDiv = $('<div>').addClass('form-check form-switch');
-                switchDiv.append(switchInput);
-
-                flexDisplay.append(dataDiv);
-                flexDisplay.append(switchDiv);
-
-                cardBody.append(flexDisplay)
-                inlineCard.append(cardBody);
-                Card.append(inlineCard);
-
-                Card.find('.btn-placeholder').replaceWith(moreInfoBtn);
-                $coinsContainer.append(Card);
             }
+
+
         });
     </script>
 </body>
