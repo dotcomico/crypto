@@ -1,9 +1,9 @@
 :root {
-  --primary-color:  rgb(243, 243, 243);
+  --primary-color: rgb(243, 243, 243);
   --secondary-color: white;
   --tertiary-color: rgb(0, 47, 255);
 
-    --primary-text:  black;
+  --primary-text: black;
   --secondary-text: rgb(75, 75, 75);
   --tertiary-text: rgb(79, 79, 79);
 
