@@ -2,9 +2,9 @@ section {
   min-height: 100vh;
   background-color: var(--primary-color);
 }
-section>div{
+section > div {
   padding: 2rem;
 }
-.navbar{
+.navbar {
   background-color: var(--secondary-color);
 }
