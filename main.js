@@ -1,4 +1,9 @@
-   $(() => {
+import { CoinData } from "./coinData.js"; // ⬅️ נוספה סיומת .js
+import { coinsManager } from "./coinsDataManeger.js";
+
+  $(() => {
+    
+    
             // Nav
             const $coinsNav = $('#coinsNav');
             const $LiveReportsNav = $('#LiveReportsNav');
@@ -28,26 +33,6 @@
             function showSection(sectionToShow) {
                 $(".display-section").hide();
                 sectionToShow.show();
-            }
-        
-            function isCoinDataOk(coinSymbol) {
-                // אם המידע כבר התקבל ונשמר &&  לא עברו 2 דקות מטעינה אחרונה - תציג שוב
-                const now = Date.now();
-                const savedDateData = localStorage.getItem(coinSymbol);
-
-                if (localStorage.getItem(coinSymbol)) {
-                    const diffMs = now - Number(savedDateData); // הפרש במילישניות
-                    const diffMinutes = diffMs / 1000 / 60; // המרה לדקות
-                    if (diffMinutes <= 2) {
-                        console.log("המידע עדיין עדכני (פחות מ-2 דקות)");
-                        return true;
-                    } else {
-                        console.log("המידע ישן (יותר מ-2 דקות)");
-                        return false;
-                    }
-                }
-                console.log('מידע לא קיים');
-                return false;
             }
             
             function getCryptoCoins() {
@@ -118,12 +103,13 @@
                         moreInfoBtn.html(`<img class="bi bi-info-circle-fill"></i> More info`);
                         return;
                     }
-
+  
+        const cachedCoinData = coinsManager.getCoinDataBySymbol(coin.symbol);
                     // אם לא מוצג כרגע - בדוק
-                    if (isCoinDataOk(coin.symbol)) {
+                if (cachedCoinData && cachedCoinData.isUpToDate()) {
                         // אם המידע כבר התקבל ונשמר &&  לא עברו 2 דקות מטעינה אחרונה - תציג שוב
                         collapse = $('<div>').css('display', 'none');
-                        let collapseBody = creatExtendedData(getCoinDataAsObject());                        /////////// צריך לשמור נתונים כאובייקט . רשימה של אובייקטים. וכך לשלוף את המידע המתאים.. לאחר מכן לעדכן את פעולת הבדיקה של iscoindataok 
+                        let collapseBody = creatExtendedData(cachedCoinData);  
                         collapse.append(collapseBody);
                         inlineCard.append(collapse);
                         collapse.slideDown(300);
@@ -140,13 +126,16 @@
                         fetch(`https://api.coingecko.com/api/v3/coins/${coin.id}`)
                             .then(res => res.json())
                             .then(data => {
+                                const newCoinData = new CoinData(coin.name , coin.symbol , data.image.small , data.market_data.current_price.usd ,data.market_data.current_price.eur ,data.market_data.current_price.ils);
+                                coinsManager.saveCoinData(newCoinData);
                                 collapse = $('<div>').css('display', 'none');
-                                let collapseBody = creatExtendedData(data);
+                                let collapseBody = creatExtendedData(newCoinData);
                                 collapse.append(collapseBody);
                                 inlineCard.append(collapse);
                                 collapse.slideDown(300);
                                 isInfoVisible = true;
                                 moreInfoBtn.html(`<i class="bi bi-x-circle-fill"></i> Close`);
+                            
                             })
                             .catch(err => {
                                 alert('"More info" API error: ' + err);
@@ -154,29 +143,25 @@
                             });
                     }
 
-                    getCoinDataAsObject(){
-
-                    }
-
-                    function creatExtendedData(data) {
+                    function creatExtendedData({name ,symbol,time,img,priceUSD,priceEUR,priceILS}) {
                         let extendedData = $('<div>').addClass('card-body border-top');
-                        extendedData.append(`<img src="${data.image.small}" alt="${coin.name}" class="mb-3">`);
+                        extendedData.append(`<img src="${img}" alt="${name}" class="mb-3">`);
                         extendedData.append(`
                         <div class="price-item">
                             <span>Dollar (USD): </span>
-                            <span class="price-value">$${data.market_data.current_price.usd}</span>
+                            <span class="price-value">$${priceUSD}</span>
                         </div>
                     `);
                         extendedData.append(`
                         <div class="price-item">
                             <span class="price-label">Euro (EUR): </span>
-                            <span class="price-value">€${data.market_data.current_price.eur}</span>
+                            <span class="price-value">€${priceEUR}</span>
                         </div>
                     `);
                         extendedData.append(`
                         <div class="price-item">
                             <span class="price-label">שקל (ILS): </span>
-                            <span class="price-value">₪${data.market_data.current_price.ils}</span>
+                            <span class="price-value">₪${priceILS}</span>
                         </div>
                     `);
                         return extendedData;

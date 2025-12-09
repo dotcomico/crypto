@@ -1,8 +1,8 @@
-export class coinData{
+export class CoinData{
     static CACHE_TIMEOUT_MINUTES = 2; 
-    constructor(name,symbole, img , priceUSD, priceEUR , priceILS){
+    constructor(name,symbol, img , priceUSD, priceEUR , priceILS){
         this.name = name;
-        this.symbole=symbole;
+        this.symbol=symbol;
         this.time=Date.now();
         this.img = img;
         this.priceUSD =priceUSD;
@@ -16,7 +16,7 @@ export class coinData{
                 if (this.time) {  // אולי אין צורך אם מתחייבים שזה מידע שיהיה קיים
                     const diffMs = now - Number(this.time); // הפרש במילישניות
                     const diffMinutes = diffMs / 1000 / 60; // המרה לדקות
-                    if (diffMinutes <= this.CACHE_TIMEOUT_MINUTES) {
+                   if (diffMinutes <= CoinData.CACHE_TIMEOUT_MINUTES) {
                         console.log("המידע עדיין עדכני (פחות מ-2 דקות)");
                         return true;
                     } else {
