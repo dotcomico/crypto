@@ -1,9 +1,9 @@
 export class CoinData{
     static CACHE_TIMEOUT_MINUTES = 2; 
-    constructor(name,symbol, img , priceUSD, priceEUR , priceILS){
+    constructor(name,symbol, img , priceUSD, priceEUR , priceILS ,time = null){
         this.name = name;
         this.symbol=symbol;
-        this.time=Date.now();
+        this.time=time|| Date.now();
         this.img = img;
         this.priceUSD =priceUSD;
         this.priceEUR = priceEUR;

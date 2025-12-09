@@ -21,7 +21,8 @@ class CoinsDataManeger {
                 item.img, 
                 item.priceUSD, 
                 item.priceEUR, 
-                item.priceILS
+                item.priceILS,
+                  item.time 
             ));
         }
     }
