@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="css/sections/live-reports-display/display.css">
     <link rel="stylesheet" href="css/sections/about-display/display.css">
     <link rel="stylesheet" href="css/responsive.css">
+
+    <script src="coinData.js"></script> 
+    <script src="main.js"></script>
 </head>
 
 <body>
@@ -163,10 +166,30 @@
                 $(".display-section").hide();
                 sectionToShow.show();
             }
+        
+            function isCoinDataOk(coinSymbol) {
+                // אם המידע כבר התקבל ונשמר &&  לא עברו 2 דקות מטעינה אחרונה - תציג שוב
+                const now = Date.now();
+                const savedDateData = localStorage.getItem(coinSymbol);
 
+                if (localStorage.getItem(coinSymbol)) {
+                    const diffMs = now - Number(savedDateData); // הפרש במילישניות
+                    const diffMinutes = diffMs / 1000 / 60; // המרה לדקות
+                    if (diffMinutes <= 2) {
+                        console.log("המידע עדיין עדכני (פחות מ-2 דקות)");
+                        return true;
+                    } else {
+                        console.log("המידע ישן (יותר מ-2 דקות)");
+                        return false;
+                    }
+                }
+                console.log('מידע לא קיים');
+                return false;
+            }
+            
             function getCryptoCoins() {
                 // קבלת נתונים Api
-                fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1')
+                fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1')
                     .then(res => res.json())
                     .then(data => {
                         let coins = data.slice(0, 30);
@@ -189,13 +212,11 @@
                 leftDiv.append(`<p class="card-text">${coin.name}</p>`);
 
                 // כפתור more info
-                let moreInfoBtn = $('<button>')
-                    .addClass('btn-more-info btn btn-primary btn-sm rounded-pill')
+                let moreInfoBtn = $('<button>').addClass('btn-more-info btn btn-primary btn-sm rounded-pill')
                     .attr({
                         type: 'button',
                     })
                     .html(`<i class="bi bi-info-circle-fill"></i> More info`);
-
                 leftDiv.append(moreInfoBtn);
 
                 //  צד ימין ####
@@ -207,7 +228,6 @@
                         role: 'switch',
                         id: `switchCheckDefault-${index}`
                     });
-
                 switchDiv.append(switchInput);
 
                 // חיבור שני הצדדים
@@ -225,62 +245,79 @@
                 let collapse = null;
 
                 moreInfoBtn.on('click', function () {
-                    // אם מוצג כרגע- תסגור נראות
-                    // אם לא מוצג בדוק:
-                    // אם כבר קיים &&  לא עברו 2 דקות מטעינה אחרונה - תציג שוב
-                    // אם לא קיים ||  עברו 2 דקות מטעינה אחרונה - תיצור מחדש ותציג
-                    
-                    // אם המידע כבר מוצג - נסגור אותו
+                    // אם מוצג כרגע - תסגור נראות
                     if (isInfoVisible && collapse) {
                         collapse.slideUp(300, function () {
                             collapse.remove();
                             collapse = null;
                         });
                         isInfoVisible = false;
-                        moreInfoBtn.html(`<i class="bi bi-info-circle-fill"></i> More info`);
+                        moreInfoBtn.html(`<img class="bi bi-info-circle-fill"></i> More info`);
                         return;
                     }
 
-                    // אם המידע לא מוצג - נביא אותו ונציג
-                    moreInfoBtn.html(`<i class="bi bi-hourglass-split"></i> Loading...`);
+                    // אם לא מוצג כרגע - בדוק
+                    if (isCoinDataOk(coin.symbol)) {
+                        // אם המידע כבר התקבל ונשמר &&  לא עברו 2 דקות מטעינה אחרונה - תציג שוב
+                        collapse = $('<div>').css('display', 'none');
+                        let collapseBody = creatExtendedData(getCoinDataAsObject());                        /////////// צריך לשמור נתונים כאובייקט . רשימה של אובייקטים. וכך לשלוף את המידע המתאים.. לאחר מכן לעדכן את פעולת הבדיקה של iscoindataok 
+                        collapse.append(collapseBody);
+                        inlineCard.append(collapse);
+                        collapse.slideDown(300);
+                        isInfoVisible = true;
+                        moreInfoBtn.html(`<i class="bi bi-x-circle-fill"></i> Close`);
+                        console.log(coin.symbol + ' Yesssssssss');
+                    } 
+                    else {
+                        // תיצור מחדש ותציג
+                        console.log(coin.symbol + ' nooooooooooooo');
+                        // שנה נראות לטעינת נתונים
+                        moreInfoBtn.html(`<img src='Image/hourglass.gif' style="max-width: 20px;"></img> Loading...`);
+                        //קבל נתונים
+                        fetch(`https://api.coingecko.com/api/v3/coins/${coin.id}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                collapse = $('<div>').css('display', 'none');
+                                let collapseBody = creatExtendedData(data);
+                                collapse.append(collapseBody);
+                                inlineCard.append(collapse);
+                                collapse.slideDown(300);
+                                isInfoVisible = true;
+                                moreInfoBtn.html(`<i class="bi bi-x-circle-fill"></i> Close`);
+                            })
+                            .catch(err => {
+                                alert('"More info" API error: ' + err);
+                                moreInfoBtn.html(`<i class="bi bi-info-circle-fill"></i> More info`);
+                            });
+                    }
 
-                    fetch(`https://api.coingecko.com/api/v3/coins/${coin.id}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            collapse = $('<div>').css('display', 'none');
-                            let collapseBody = $('<div>').addClass('card-body border-top');
+                    getCoinDataAsObject(){
 
-                            collapseBody.append(`<img src="${data.image.small}" alt="${coin.name}" class="mb-3">`);
-                            collapseBody.append(`
-                    <div class="price-item">
-                        <span>Dollar (USD): </span>
-                        <span class="price-value">$${data.market_data.current_price.usd}</span>
-                    </div>
-                `);
-                            collapseBody.append(`
-                    <div class="price-item">
-                        <span class="price-label">Euro (EUR): </span>
-                        <span class="price-value">€${data.market_data.current_price.eur}</span>
-                    </div>
-                `);
-                            collapseBody.append(`
-                    <div class="price-item">
-                        <span class="price-label">שקל (ILS): </span>
-                        <span class="price-value">₪${data.market_data.current_price.ils}</span>
-                    </div>
-                `);
+                    }
 
-                            collapse.append(collapseBody);
-                            inlineCard.append(collapse);
-                            collapse.slideDown(300);
-
-                            isInfoVisible = true;
-                            moreInfoBtn.html(`<i class="bi bi-x-circle-fill"></i> Close`);
-                        })
-                        .catch(err => {
-                            alert('"More info" API error: ' + err);
-                            moreInfoBtn.html(`<i class="bi bi-info-circle-fill"></i> More info`);
-                        });
+                    function creatExtendedData(data) {
+                        let extendedData = $('<div>').addClass('card-body border-top');
+                        extendedData.append(`<img src="${data.image.small}" alt="${coin.name}" class="mb-3">`);
+                        extendedData.append(`
+                        <div class="price-item">
+                            <span>Dollar (USD): </span>
+                            <span class="price-value">$${data.market_data.current_price.usd}</span>
+                        </div>
+                    `);
+                        extendedData.append(`
+                        <div class="price-item">
+                            <span class="price-label">Euro (EUR): </span>
+                            <span class="price-value">€${data.market_data.current_price.eur}</span>
+                        </div>
+                    `);
+                        extendedData.append(`
+                        <div class="price-item">
+                            <span class="price-label">שקל (ILS): </span>
+                            <span class="price-value">₪${data.market_data.current_price.ils}</span>
+                        </div>
+                    `);
+                        return extendedData;
+                    }
                 });
             }
 
