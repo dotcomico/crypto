@@ -5,21 +5,20 @@ class CoinsDataManeger {
   coinsDataList = [];
 
   constructor() {
-    this.loadCoinsFromLocal(); // טוען את הנתונים ברגע יצירת המופע
+    this.loadCoinsFromLocal(); // טעינת הנתונים ברגע יצירת CoinsDataManeger
   }
 
-  // 1. טעינת נתונים מה-Local Storage ויצירת מופעים מחדש
+  // טעינת נתונים מהlocalStorge
   loadCoinsFromLocal() {
     const jsonString = localStorage.getItem(this.LS_KEY);
     if (jsonString) {
       const dataArray = JSON.parse(jsonString);
 
-      // חובה ליצור מופע coinData מכל אובייקט JSON כדי שיהיו לו את המתודות!
       this.coinsDataList = dataArray.map(
         (item) =>
           new CoinData(
             item.name,
-            item.symbol, // שם המשתנה כפי שהגדרת במחלקת coinData
+            item.symbol,
             item.img,
             item.priceUSD,
             item.priceEUR,
@@ -27,10 +26,15 @@ class CoinsDataManeger {
             item.time
           )
       );
+      console.log("מידע המטבעות השמור נטען");
     }
   }
+ // שמירת נתונים לlocalStorege
+  saveListToLocal() {
+    localStorage.setItem(this.LS_KEY, JSON.stringify(this.coinsDataList));
+  }
 
-  // 2. שמירה או עדכון של מטבע בודד
+  //שמירת/עדכון מטבע
   saveCoinData(coin) {
     // בדוק אם המטבע כבר קיים
     const existingIndex = this.coinsDataList.findIndex(
@@ -47,26 +51,23 @@ class CoinsDataManeger {
       console.log("מידע המטבע " + coin.symbol + " נשמר");
     }
 
-    // שמור את כל הרשימה ל-Local Storage לאחר השינוי
+    // שמור את כל הרשימה לאחר השינוי
     this.saveListToLocal();
   }
 
-  // פונקציית עזר לשמירת הרשימה כולה
-  saveListToLocal() {
-    localStorage.setItem(this.LS_KEY, JSON.stringify(this.coinsDataList));
-  }
-  // 3. שליפה (מתוקן)
+  // שליפה
   getCoinDataBySymbol(symbol) {
-    // 🛑 הוספת הפרמטר symbol
+      console.log(symbol + 'מידע התקבל  ');
     return this.coinsDataList.find((coin) => coin.symbol === symbol);
+    
   }
+
   isCoinInCache(symbol) {
     // אם המתודה מחזירה אובייקט (כלומר, לא undefined), זה אומר שהמטבע קיים.
     return !!this.getCoinDataBySymbol(symbol);
-
     // לחלופין, ניתן להשתמש ב-findIndex:
     // return this.coinsDataList.findIndex(coin => coin.symbole === symbol) !== -1;
   }
 }
 
-export const coinsManager = new CoinsDataManeger(); // ייצוא מופע יחיד (Singleton)
+export const coinsManager = new CoinsDataManeger();

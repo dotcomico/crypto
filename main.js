@@ -2,6 +2,9 @@ import { CoinData } from "./coinData.js"; // ⬅️ נוספה סיומת .js
 import { coinsManager } from "./coinsDataManeger.js";
 
 $(() => {
+  const API_COINS ="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1";
+  const API_COINS_DATA = "https://api.coingecko.com/api/v3/coins/"; // + COIN ID !
+
   // Nav
   const $coinsNav = $("#coinsNav");
   const $LiveReportsNav = $("#LiveReportsNav");
@@ -35,9 +38,7 @@ $(() => {
 
   function getCryptoCoins() {
     // קבלת נתונים Api
-    fetch(
-      "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1"
-    )
+    fetch(API_COINS)
       .then((res) => res.json())
       .then((data) => {
         let coins = data.slice(0, 30);
@@ -95,8 +96,9 @@ $(() => {
     let isInfoVisible = false;
     let collapse = null;
 
+    //---פעולות בעת לחיצה על כפתור---
     moreInfoBtn.on("click", function () {
-      // אם מוצג כרגע - תסגור נראות
+      // אם מידע המטבע כבר מוצג - תסגור נראות
       if (isInfoVisible && collapse) {
         collapse.slideUp(300, function () {
           collapse.remove();
@@ -106,11 +108,11 @@ $(() => {
         moreInfoBtn.html(`<img class="bi bi-info-circle-fill"></i> More info`);
         return;
       }
-
+      // אם מידע המטבע לא מוצג
       const cachedCoinData = coinsManager.getCoinDataBySymbol(coin.symbol);
-      // אם לא מוצג כרגע - בדוק
       if (cachedCoinData && cachedCoinData.isUpToDate()) {
-        // אם המידע כבר התקבל ונשמר &&  לא עברו 2 דקות מטעינה אחרונה - תציג שוב
+        // בדוק תקינות נתונים שמורים
+        //נתונים תקינים - הצג מחדש
         collapse = $("<div>").css("display", "none");
         let collapseBody = creatExtendedData(cachedCoinData);
         collapse.append(collapseBody);
@@ -118,16 +120,16 @@ $(() => {
         collapse.slideDown(300);
         isInfoVisible = true;
         moreInfoBtn.html(`<i class="bi bi-x-circle-fill"></i> Close`);
-        console.log(coin.symbol + " Yesssssssss");
+        console.log(coin.symbol + "תונים תקינים - מציג מחדש");
       } else {
-        // תיצור מחדש ותציג
-        console.log(coin.symbol + " nooooooooooooo");
-        // שנה נראות לטעינת נתונים
+        // נתונים לא תקינים - צור מחדש והצג
+        console.log(coin.symbol + " נתונים לא תקינים - יוצר מחדש ומציג");
+        // שנה נראות כפתור לטעינת נתונים
         moreInfoBtn.html(
           `<img src='Image/hourglass.gif' style="max-width: 20px;"></img> Loading...`
         );
         //קבל נתונים
-        fetch(`https://api.coingecko.com/api/v3/coins/${coin.id}`)
+        fetch(API_COINS_DATA + coin.id)
           .then((res) => res.json())
           .then((data) => {
             const newCoinData = new CoinData(
