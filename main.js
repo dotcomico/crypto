@@ -1,4 +1,4 @@
-import { CoinData } from "./coinData.js"; // ⬅️ נוספה סיומת .js
+import { CoinData } from "./coinData.js";
 import { coinsManager } from "./coinsDataManeger.js";
 
 $(() => {
