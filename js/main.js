@@ -12,8 +12,8 @@ $(() => {
 
   getCryptoCoins();
 
-  $searchBar.on("input", function () {
-    let searchInput = this.value + "";
+  $('#searchBtn').on("click", function () {
+    let searchInput = $searchBar.val() + "";
     const filteredCoins = coins.filter((coin) => {
       return (
         coin.name.toLowerCase().includes(searchInput) ||
