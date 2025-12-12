@@ -2,9 +2,11 @@ import { CoinData } from "./coinData.js";
 import { coinsManager } from "./coinsDataManeger.js";
 
 $(() => {
-  const API_COINS ="https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1";
+  const API_COINS =
+    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1";
   const API_COINS_DATA = "https://api.coingecko.com/api/v3/coins/"; // + COIN ID !
-
+  let coins = [];
+  const $searchBar = $('#searchBar');
   // Nav
   const $coinsNav = $("#coinsNav");
   const $LiveReportsNav = $("#LiveReportsNav");
@@ -30,21 +32,30 @@ $(() => {
     showSection($aboutDisplay);
   });
 
+
+   $searchBar.on('input', function() {
+    let searchInput = this.value + '';
+    const filteredCoins = coins.filter(coin =>{
+        return coin.name.toLowerCase().includes(searchInput) || coin.symbol.toLowerCase().includes(searchInput);
+    });
+    renderCoins(filteredCoins);
+   });
+
   // Functions
-  function showSection(sectionToShow) {
-    $(".display-section").hide();
-    sectionToShow.show();
-  }
+function renderCoins(coins){
+    $coinsContainer.empty();
+  coins.forEach((element, index) => {
+          addCoinCard(element, index);
+        });
+}
 
   function getCryptoCoins() {
     // קבלת נתונים Api
     fetch(API_COINS)
       .then((res) => res.json())
       .then((data) => {
-        let coins = data.slice(0, 30);
-        coins.forEach((element, index) => {
-          addCoinCard(element, index);
-        });
+        coins = data.slice(0, 30);
+        renderCoins(coins);
       })
       .catch((err) => alert(err));
   }
@@ -189,5 +200,10 @@ $(() => {
         return extendedData;
       }
     });
+  }  
+  
+  function showSection(sectionToShow) {
+    $(".display-section").hide();
+    sectionToShow.show();
   }
 });
