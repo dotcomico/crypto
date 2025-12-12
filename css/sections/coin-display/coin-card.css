@@ -37,6 +37,14 @@
   color: var(--secondary-text);
   size: 2em;
 }
+.btn-more-info {
+    transition: 0.3s;
+}
+.btn-error {
+    background-color: #dc3545 !important; 
+    border-color: #dc3545 !important;
+    color: white !important;
+}
 /* .highlight {
     background-color: rgb(255, 187, 0);
     font-weight: bold;

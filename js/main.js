@@ -23,13 +23,6 @@ $(() => {
     renderCoins(filteredCoins);
   });
 
-  // Functions
-  function renderCoins(coins) {
-    $coinsContainer.empty();
-    coins.forEach((element, index) => {
-      addCoinCard(element, index);
-    });
-  }
   function getCryptoCoins() {
     // קבלת נתונים Api
     fetch(API_COINS)
@@ -38,8 +31,32 @@ $(() => {
         coins = data.slice(0, 30);
         renderCoins(coins);
       })
-      .catch((err) => alert(err));
+      .catch((err) => {
+        displayErrorAlert(err.message);
+        $searchBar.prop("disabled", true);
+      });
   }
+  // הצגת שגיאת fetch
+  function displayErrorAlert(message) {
+    $coinsContainer.empty();
+    const errorMessage = $(`
+        <div class="alert alert-danger text-center" role="alert">
+          <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill"></i> Data Loading Error</h4>
+            <p>${message}</p>
+            <hr>
+           <p class="mb-0">Please try refreshing the page or checking your internet connection.</p>
+        </div>
+    `);
+    $coinsContainer.append(errorMessage);
+  }
+
+  function renderCoins(coins) {
+    $coinsContainer.empty();
+    coins.forEach((element, index) => {
+      addCoinCard(element, index);
+    });
+  }
+
   // הוספת כרטיס מטבע לקונטיינר
   function addCoinCard(coin, index) {
     const card = createCoinCard(coin, index);
@@ -145,7 +162,7 @@ $(() => {
     if (cachedCoinData && cachedCoinData.isUpToDate()) {
       console.log(cachedCoinData.symbol + "נתונים תקינים, מציג מחדש");
       moreInfoBtn.html(`<i class="bi bi-x-circle-fill"></i> Close`);
-     return createAndShowCollapse(cachedCoinData, inlineCard);
+      return createAndShowCollapse(cachedCoinData, inlineCard);
     } else {
       console.log(coin.symbol + "נתונים לא תקינים, שולף מחדש");
       return fetchAndDisplayData(coin, inlineCard, moreInfoBtn);
@@ -153,7 +170,7 @@ $(() => {
   }
 
   //שליפה ושימוש בנתונים עדכניים
-   function fetchAndDisplayData(coin, inlineCard, moreInfoBtn) {
+  function fetchAndDisplayData(coin, inlineCard, moreInfoBtn) {
     setLoadingState(moreInfoBtn);
 
     const collapse = $("<div>").css("display", "none");
@@ -191,8 +208,19 @@ $(() => {
 
   //טיפול בשגיאות
   function handleFetchError(err, moreInfoBtn) {
-    alert('"More info" API error: ' + err);
-    moreInfoBtn.html(`<i class="bi bi-info-circle-fill"></i> More info`);
+    console.error('"More info" API error: ' + err);
+    moreInfoBtn.prop("disabled", true);
+
+    // מכפתור לאדום
+    moreInfoBtn.addClass("btn-error");
+    moreInfoBtn.html(`<i class="bi bi-info-circle-fill"></i> Error`);
+
+    //טיימר לחזרה למצב רגיל
+    setTimeout(() => {
+      moreInfoBtn.removeClass("btn-error");
+      moreInfoBtn.html(`<i class="bi bi-info-circle-fill"></i> More info`);
+      moreInfoBtn.prop("disabled", false);
+    }, 3000);
   }
 
   function creatExtendedData({
@@ -233,5 +261,5 @@ $(() => {
     inlineCard.append(collapse);
     collapse.slideDown(300);
     return collapse;
-}
+  }
 });
