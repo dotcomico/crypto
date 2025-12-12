@@ -1,4 +1,4 @@
-import { CoinData } from "./coinData.js";
+import { CoinData } from "./modules/coinData.js";
 import { coinsManager } from "./coinsDataManeger.js";
 
 $(() => {
@@ -6,48 +6,30 @@ $(() => {
     "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1";
   const API_COINS_DATA = "https://api.coingecko.com/api/v3/coins/"; // + COIN ID !
   let coins = [];
-  const $searchBar = $('#searchBar');
-  // Nav
-  const $coinsNav = $("#coinsNav");
-  const $LiveReportsNav = $("#LiveReportsNav");
-  const $aboutNav = $("#aboutNav");
 
-  // Displays
-  const $coinsDisplay = $("#coinsDisplay");
-  const $liveReportsDisplay = $("#liveReportsDisplay");
-  const $aboutDisplay = $("#aboutDisplay");
-
+  const $searchBar = $("#searchBar");
   const $coinsContainer = $("#coinsGrid");
 
   getCryptoCoins();
 
-  // Events
-  $coinsNav.on("click", function () {
-    showSection($coinsDisplay);
-  });
-  $LiveReportsNav.on("click", function () {
-    showSection($liveReportsDisplay);
-  });
-  $aboutNav.on("click", function () {
-    showSection($aboutDisplay);
-  });
-
-
-   $searchBar.on('input', function() {
-    let searchInput = this.value + '';
-    const filteredCoins = coins.filter(coin =>{
-        return coin.name.toLowerCase().includes(searchInput) || coin.symbol.toLowerCase().includes(searchInput);
+  $searchBar.on("input", function () {
+    let searchInput = this.value + "";
+    const filteredCoins = coins.filter((coin) => {
+      return (
+        coin.name.toLowerCase().includes(searchInput) ||
+        coin.symbol.toLowerCase().includes(searchInput)
+      );
     });
     renderCoins(filteredCoins);
-   });
+  });
 
   // Functions
-function renderCoins(coins){
+  function renderCoins(coins) {
     $coinsContainer.empty();
-  coins.forEach((element, index) => {
-          addCoinCard(element, index);
-        });
-}
+    coins.forEach((element, index) => {
+      addCoinCard(element, index);
+    });
+  }
 
   function getCryptoCoins() {
     // קבלת נתונים Api
@@ -167,43 +149,38 @@ function renderCoins(coins){
             );
           });
       }
+    });
+  }
 
-      function creatExtendedData({
-        name,
-        symbol,
-        time,
-        img,
-        priceUSD,
-        priceEUR,
-        priceILS,
-      }) {
-        let extendedData = $("<div>").addClass("card-body border-top");
-        extendedData.append(`<img src="${img}" alt="${name}" class="mb-3">`);
-        extendedData.append(`
+  function creatExtendedData({
+    name,
+    symbol,
+    time,
+    img,
+    priceUSD,
+    priceEUR,
+    priceILS,
+  }) {
+    let extendedData = $("<div>").addClass("card-body border-top");
+    extendedData.append(`<img src="${img}" alt="${name}" class="mb-3">`);
+    extendedData.append(`
                         <div class="price-item">
                             <span>Dollar (USD): </span>
                             <span class="price-value">$${priceUSD}</span>
                         </div>
                     `);
-        extendedData.append(`
+    extendedData.append(`
                         <div class="price-item">
                             <span class="price-label">Euro (EUR): </span>
                             <span class="price-value">€${priceEUR}</span>
                         </div>
                     `);
-        extendedData.append(`
+    extendedData.append(`
                         <div class="price-item">
                             <span class="price-label">שקל (ILS): </span>
                             <span class="price-value">₪${priceILS}</span>
                         </div>
                     `);
-        return extendedData;
-      }
-    });
-  }  
-  
-  function showSection(sectionToShow) {
-    $(".display-section").hide();
-    sectionToShow.show();
+    return extendedData;
   }
 });
