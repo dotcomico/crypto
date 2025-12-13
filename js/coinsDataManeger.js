@@ -26,7 +26,7 @@ class CoinsDataManeger {
             item.time
           )
       );
-      console.log("מידע המטבעות השמור נטען");
+      console.log("מידע מטבעות - נטען");
     }
   }
  // שמירת נתונים לlocalStorege

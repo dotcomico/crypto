@@ -1,5 +1,6 @@
 import { CoinData } from "./modules/coinData.js";
 import { coinsManager } from "./coinsDataManeger.js";
+import { reportCoinsManeger } from "./ReportCoinsManager.js";
 
 $(() => {
   const API_COINS =
@@ -12,7 +13,7 @@ $(() => {
 
   getCryptoCoins();
 
-  $('#searchBtn').on("click", function () {
+  $("#searchBtn").on("click", function () {
     let searchInput = $searchBar.val() + "";
     const filteredCoins = coins.filter((coin) => {
       return (
@@ -89,7 +90,7 @@ $(() => {
       "d-flex justify-content-between align-items-start"
     );
     const leftDiv = createLeftSection(coin);
-    const switchDiv = createSwitchSection(index);
+    const switchDiv = createSwitchSection(index, coin.symbol);
 
     flex.append(leftDiv, switchDiv);
     return flex;
@@ -116,7 +117,7 @@ $(() => {
   }
 
   //יצירת צד ימין - Switch
-  function createSwitchSection(index) {
+  function createSwitchSection(index, coinSymbol) {
     const switchDiv = $("<div>").addClass("form-check form-switch");
     const switchInput = $("<input>")
       .addClass("form-check-input switch")
@@ -125,6 +126,25 @@ $(() => {
         role: "switch",
         id: `switchCheckDefault-${index}`,
       });
+// בדיקה אם הסוויץ מסומן 
+    if ( reportCoinsManeger.isInCache(coinSymbol)) {
+    switchInput.prop("checked", true);     
+     }else {
+    switchInput.prop("checked", false);
+     }
+
+    switchInput.on("change", function () {
+      const isNowChecked = $(this).is(":checked");
+      if (isNowChecked) {
+        const success = reportCoinsManeger.add(coinSymbol); // מקבלים תשובה האם התווסף או לא
+        if(!success){
+          $(this).prop("checked", false);
+        }
+      } else {
+        reportCoinsManeger.remove(coinSymbol);
+      }
+      console.log(reportCoinsManeger.reportCoins);
+    });
 
     switchDiv.append(switchInput);
     return switchDiv;
