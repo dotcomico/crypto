@@ -1,4 +1,4 @@
-import { getCoinDetails, getCryptoCoins } from "./api/CoinApiService.js";
+import {  getCryptoCoins } from "./api/CoinApiService.js";
 import { filterCoins } from "./modules/CoinSearchHandler.js";
 import { renderCoins } from "./ui/CoinCardRenderer.js";
 import { createErrorAlert } from "./ui/ErrorAlert.js";
