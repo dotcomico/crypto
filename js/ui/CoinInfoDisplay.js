@@ -1,0 +1,6 @@
+// - showInfo()
+// - closeInfo()
+// - createAndShowCollapse()
+// - creatExtendedData()
+// - setLoadingState()
+// - handleFetchError()

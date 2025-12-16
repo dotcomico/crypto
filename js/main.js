@@ -1,37 +1,23 @@
+import { getCoinDetails, getCryptoCoins } from "./api/CoinApiService.js";
 import { CoinData } from "./modules/CoinData.js";
 import { coinsManager } from "./modules/CoinsDataManager.js";
+import { filterCoins } from "./modules/CoinSearchHandler.js";
 import { reportCoinsManager } from "./modules/ReportCoinsManager.js";
 import { createErrorAlert } from "./ui/ErrorAlert.js";
 
 $(() => {
-  const API_COINS =
-    "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=30&page=1";
-  const API_COINS_DATA = "https://api.coingecko.com/api/v3/coins/"; // + COIN ID !
   let coins = [];
-
   const $searchBar = $("#searchBar");
   const $coinsContainer = $("#coinsGrid");
-// קריאה לטעינת מטבעות
-  getCryptoCoins();
 
-  $("#searchBtn").on("click", function () {
-    let searchInput = $searchBar.val().toLowerCase().trim();
+  // קריאה לטעינת מטבעות
+  getCoins();
 
-    const filteredCoins = coins.filter((coin) => {
-      return (
-        coin.name.toLowerCase().includes(searchInput) ||
-        coin.symbol.toLowerCase().includes(searchInput)
-      );
-    });
-    renderCoins(filteredCoins);
-  });
-// פונקציה קבלת נתוני מטבעות מ API
-  function getCryptoCoins() {
-    // קבלת נתונים Api
-    fetch(API_COINS)
-      .then((res) => res.json())
+  // קבלת מטבעות
+  function getCoins() {
+    getCryptoCoins()
       .then((data) => {
-        coins = data.slice(0, 30);
+        coins = data;
         renderCoins(coins);
       })
       .catch((err) => {
@@ -40,12 +26,7 @@ $(() => {
       });
   }
 
-  // פונקציה להצגת שגיאת fetch
-  function displayErrorAlert(message) {
-    $coinsContainer.empty();
-    $coinsContainer.append(createErrorAlert(message));
-  }
-
+  //
   function renderCoins(coins) {
     $coinsContainer.empty();
     coins.forEach((element, index) => {
@@ -121,18 +102,18 @@ $(() => {
         role: "switch",
         id: `switchCheckDefault-${index}`,
       });
-// בדיקה אם הסוויץ מסומן 
-    if ( reportCoinsManager.isInCache(coinSymbol)) {
-    switchInput.prop("checked", true);     
-     }else {
-    switchInput.prop("checked", false);
-     }
+    // בדיקה אם הסוויץ מסומן
+    if (reportCoinsManager.isInCache(coinSymbol)) {
+      switchInput.prop("checked", true);
+    } else {
+      switchInput.prop("checked", false);
+    }
 
     switchInput.on("change", function () {
       const isNowChecked = $(this).is(":checked");
       if (isNowChecked) {
         const success = reportCoinsManager.add(coinSymbol); // מקבלים תשובה האם התווסף או לא
-        if(!success){
+        if (!success) {
           $(this).prop("checked", false);
         }
       } else {
@@ -180,19 +161,18 @@ $(() => {
       return createAndShowCollapse(cachedCoinData, inlineCard);
     } else {
       console.log(coin.symbol + "נתונים לא תקינים, שולף מחדש");
-      return fetchAndDisplayData(coin, inlineCard, moreInfoBtn);
+      return displayCoinData(coin, inlineCard, moreInfoBtn);
     }
   }
 
-  //שליפה ושימוש בנתונים עדכניים
-  function fetchAndDisplayData(coin, inlineCard, moreInfoBtn) {
+  //הצגת נתוני מטבע בודד
+  function displayCoinData(coin, inlineCard, moreInfoBtn) {
     setLoadingState(moreInfoBtn);
 
     const collapse = $("<div>").css("display", "none");
     inlineCard.append(collapse);
 
-    fetch(API_COINS_DATA + coin.id)
-      .then((res) => res.json())
+    getCoinDetails(coin.id)
       .then((data) => {
         const newCoinData = new CoinData(
           coin.name,
@@ -221,7 +201,7 @@ $(() => {
     );
   }
 
-  //טיפול בשגיאות
+  //טיפול בשגיאות (נראות כפתור moreInfo)
   function handleFetchError(err, moreInfoBtn) {
     console.error('"More info" API error: ' + err);
     moreInfoBtn.prop("disabled", true);
@@ -277,4 +257,16 @@ $(() => {
     collapse.slideDown(300);
     return collapse;
   }
+
+  // פונקציה להצגת שגיאת fetch
+  function displayErrorAlert(message) {
+    $coinsContainer.empty();
+    $coinsContainer.append(createErrorAlert(message));
+  }
+  
+  // טיפול בלחיצה על כפתור חיפוש מטבעות
+  $("#searchBtn").on("click", function () {
+    const filteredCoins = filterCoins(coins, $searchBar.val());
+    renderCoins(filteredCoins);
+  });
 });
