@@ -5,3 +5,7 @@
 // - createMoreInfoButton()
 // - renderCoins()
 // - addCoinCard()
+
+
+
+

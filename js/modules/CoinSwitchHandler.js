@@ -1,8 +1,4 @@
-// - createSwitchSection()
-// - handleSwitchChange()
-// - updateSwitchState()
-
-import { reportCoinsManager } from "./ReportCoinsManager";
+import { reportCoinsManager } from "./ReportCoinsManager.js";
 
 export function createSwitchSection(index, coinSymbol) {
   const switchDiv = $("<div>").addClass("form-check form-switch");
