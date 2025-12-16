@@ -1,4 +1,5 @@
-import { CoinData } from "./modules/CoinData.js";
+import { CoinData } from "./CoinData.js";
+
 
 class CoinsDataManager {
   LS_KEY = "crypto_coins_data";

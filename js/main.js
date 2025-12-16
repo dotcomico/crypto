@@ -1,6 +1,6 @@
 import { CoinData } from "./modules/CoinData.js";
-import { coinsManager } from "./CoinsDataManager.js";
-import { reportCoinsManager } from "./ReportCoinsManager.js";
+import { coinsManager } from "./modules/CoinsDataManager.js";
+import { reportCoinsManager } from "./modules/ReportCoinsManager.js";
 import { createErrorAlert } from "./ui/ErrorAlert.js";
 
 $(() => {
