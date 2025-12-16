@@ -25,10 +25,22 @@
     <link rel="stylesheet" href="css/sections/coin-display/display.css">
     <link rel="stylesheet" href="css/sections/live-reports-display/display.css">
     <link rel="stylesheet" href="css/sections/about-display/display.css">
+    <link rel="stylesheet" href="css/dialog.css">
     <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
+     <div id="simpleDialog" class="dialog-overlay">
+        <div class="dialog-box">
+            <div class="dialog-title">
+               לא ניתן לסמן יותר מ-5 מטבעות!
+            </div>
+            <p>בחר מטבע להסרה והחלפה במטבע החדש</p>
+            <div id="dialogCoinContainer"></div>
+            <button  id="cancel-button" class="cancel-button">  ביטול  </button>
+        </div>
+    </div>
+
     <div id="topBar"></div>
     <div class="wrapper">
         <header id="header">
@@ -89,11 +101,9 @@
         </section>
     </div>
 
-    <!-- <script src="js/modules/coinData.js" type="module"></script>
-    <script src="js/coinsDataManeger.js" type ="module"></script>
-    <script src="js/ReportCoinsManager.js" type ="module"></script> -->
     <script src="js/ui/Navigation.js"></script>
     <script src="js/Main.js" type="module"></script>
+    
 </body>
 
 </html>

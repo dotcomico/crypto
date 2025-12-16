@@ -93,23 +93,23 @@ import { coinsManager } from "../modules/CoinsDataManager.js";
     priceILS,
   }) {
     let extendedData = $("<div>").addClass("card-body border-top");
-    extendedData.append(`<img src="${img}" alt="${name}" class="mb-3">`);
+    extendedData.append(`<img src="${img}" alt="${name}" class="mb-3 coin-img">`);
     extendedData.append(`
                         <div class="price-item">
                             <span>Dollar (USD): </span>
-                            <span class="price-value">$${priceUSD}</span>
+                            <span class="price-value">${priceUSD}$</span>
                         </div>
                     `);
     extendedData.append(`
                         <div class="price-item">
                             <span class="price-label">Euro (EUR): </span>
-                            <span class="price-value">€${priceEUR}</span>
+                            <span class="price-value">${priceEUR}€</span>
                         </div>
                     `);
     extendedData.append(`
                         <div class="price-item">
-                            <span class="price-label">שקל (ILS): </span>
-                            <span class="price-value">₪${priceILS}</span>
+                            <span class="price-label">Shekel (ILS): </span>
+                            <span class="price-value">${priceILS}₪</span>
                         </div>
                     `);
     return extendedData;

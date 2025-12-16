@@ -1,6 +1,8 @@
+import { openDialog } from "../ui/MaxCoinsDialogManager.js";
+
 class ReportCoinsManager {
   LS_KEY = "report_coins_data";
-  LIMIT= 5;
+  LIMIT = 5;
   reportCoins = [];
 
   constructor() {
@@ -23,10 +25,10 @@ class ReportCoinsManager {
   //שמירת מטבע
   add(symbol) {
     if (this.isInCache(symbol.trim().toUpperCase())) return true;
-    
-    if (this.reportCoins.length >= this.LIMIT){
-        alert('לא ניתן להוסיף יותר מחמישה מטבעות.');
-        return false;
+
+    if (this.reportCoins.length >= this.LIMIT) {
+      openDialog(symbol.trim());
+      return false;
     }
 
     this.reportCoins.push(symbol.trim().toUpperCase());
@@ -36,10 +38,12 @@ class ReportCoinsManager {
 
   // הסרת מטבע
   remove(symbol) {
-    this.reportCoins = this.reportCoins.filter((rc) => rc.toLowerCase() !== symbol.toLowerCase());
+    this.reportCoins = this.reportCoins.filter(
+      (rc) => rc.toLowerCase() !== symbol.toLowerCase()
+    );
     this.saveListToLocal();
   }
-
+  // בדיקה האם מטבע שמור בנתונים
   isInCache(symbol) {
     return this.reportCoins.some(
       (rc) => rc.toLowerCase() === symbol.toLowerCase()

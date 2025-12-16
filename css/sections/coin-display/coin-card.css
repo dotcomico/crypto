@@ -20,7 +20,10 @@
 .collapseView {
   background-color: #f9fafb;
 }
-
+.coin-img{
+  display: block; 
+  margin: auto; 
+}
 .price-item {
   background-color: rgb(255, 255, 255);
   border: 1px solid transparent;
@@ -45,9 +48,3 @@
     border-color: #dc3545 !important;
     color: white !important;
 }
-/* .highlight {
-    background-color: rgb(255, 187, 0);
-    font-weight: bold;
-    padding: 0 2px;
-    border-radius: 3px;
-} */
