@@ -1,11 +1,11 @@
-import { CoinData } from "./modules/coinData.js";
+import { CoinData } from "./modules/CoinData.js";
 
-class CoinsDataManeger {
+class CoinsDataManager {
   LS_KEY = "crypto_coins_data";
   coinsDataList = [];
 
   constructor() {
-    this.loadCoinsFromLocal(); // טעינת הנתונים ברגע יצירת CoinsDataManeger
+    this.loadCoinsFromLocal(); // טעינת הנתונים ברגע יצירת CoinsDataManager
   }
 
   // טעינת נתונים מהlocalStorge
@@ -70,4 +70,4 @@ class CoinsDataManeger {
   }
 }
 
-export const coinsManager = new CoinsDataManeger();
+export const coinsManager = new CoinsDataManager();

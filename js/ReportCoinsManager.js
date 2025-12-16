@@ -47,4 +47,4 @@ class ReportCoinsManager {
   }
 }
 
-export const reportCoinsManeger = new ReportCoinsManager();
+export const reportCoinsManager = new ReportCoinsManager();

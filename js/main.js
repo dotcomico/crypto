@@ -1,6 +1,7 @@
-import { CoinData } from "./modules/coinData.js";
-import { coinsManager } from "./coinsDataManeger.js";
-import { reportCoinsManeger } from "./ReportCoinsManager.js";
+import { CoinData } from "./modules/CoinData.js";
+import { coinsManager } from "./CoinsDataManager.js";
+import { reportCoinsManager } from "./ReportCoinsManager.js";
+import { createErrorAlert } from "./ui/ErrorAlert.js";
 
 $(() => {
   const API_COINS =
@@ -10,11 +11,12 @@ $(() => {
 
   const $searchBar = $("#searchBar");
   const $coinsContainer = $("#coinsGrid");
-
+// קריאה לטעינת מטבעות
   getCryptoCoins();
 
   $("#searchBtn").on("click", function () {
-    let searchInput = $searchBar.val() + "";
+    let searchInput = $searchBar.val().toLowerCase().trim();
+
     const filteredCoins = coins.filter((coin) => {
       return (
         coin.name.toLowerCase().includes(searchInput) ||
@@ -23,7 +25,7 @@ $(() => {
     });
     renderCoins(filteredCoins);
   });
-
+// פונקציה קבלת נתוני מטבעות מ API
   function getCryptoCoins() {
     // קבלת נתונים Api
     fetch(API_COINS)
@@ -37,18 +39,11 @@ $(() => {
         $searchBar.prop("disabled", true);
       });
   }
-  // הצגת שגיאת fetch
+
+  // פונקציה להצגת שגיאת fetch
   function displayErrorAlert(message) {
     $coinsContainer.empty();
-    const errorMessage = $(`
-        <div class="alert alert-danger text-center" role="alert">
-          <h4 class="alert-heading"><i class="bi bi-exclamation-triangle-fill"></i> Data Loading Error</h4>
-            <p>${message}</p>
-            <hr>
-           <p class="mb-0">Please try refreshing the page or checking your internet connection.</p>
-        </div>
-    `);
-    $coinsContainer.append(errorMessage);
+    $coinsContainer.append(createErrorAlert(message));
   }
 
   function renderCoins(coins) {
@@ -127,7 +122,7 @@ $(() => {
         id: `switchCheckDefault-${index}`,
       });
 // בדיקה אם הסוויץ מסומן 
-    if ( reportCoinsManeger.isInCache(coinSymbol)) {
+    if ( reportCoinsManager.isInCache(coinSymbol)) {
     switchInput.prop("checked", true);     
      }else {
     switchInput.prop("checked", false);
@@ -136,14 +131,14 @@ $(() => {
     switchInput.on("change", function () {
       const isNowChecked = $(this).is(":checked");
       if (isNowChecked) {
-        const success = reportCoinsManeger.add(coinSymbol); // מקבלים תשובה האם התווסף או לא
+        const success = reportCoinsManager.add(coinSymbol); // מקבלים תשובה האם התווסף או לא
         if(!success){
           $(this).prop("checked", false);
         }
       } else {
-        reportCoinsManeger.remove(coinSymbol);
+        reportCoinsManager.remove(coinSymbol);
       }
-      console.log(reportCoinsManeger.reportCoins);
+      console.log(reportCoinsManager.reportCoins);
     });
 
     switchDiv.append(switchInput);
