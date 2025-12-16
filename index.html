@@ -30,17 +30,19 @@
 </head>
 
 <body>
-     <div id="simpleDialog" class="dialog-overlay">
+    <!-- Max coins for report -  Dialog -->
+    <div id="simpleDialog" class="dialog-overlay">
         <div class="dialog-box">
             <div class="dialog-title">
-               לא ניתן לסמן יותר מ-5 מטבעות!
+                לא ניתן לסמן יותר מ-5 מטבעות!
             </div>
             <p>בחר מטבע להסרה והחלפה במטבע החדש</p>
             <div id="dialogCoinContainer"></div>
-            <button  id="cancel-button" class="cancel-button">  ביטול  </button>
+            <button id="cancel-button" class="cancel-button"> ביטול </button>
         </div>
     </div>
 
+    <!-- Heading -->
     <div id="topBar"></div>
     <div class="wrapper">
         <header id="header">
@@ -49,7 +51,7 @@
             <h1 class="title">Crypto Tracker</h1>
             <h2 class="inner-title">Real-time digital currency tracking</h2>
         </header>
-
+        <!-- Main section -->
         <section>
             <nav class="navbar navbar-expand-lg">
                 <div class="container-fluid">
@@ -80,21 +82,22 @@
             <!-- Display Views -->
             <div id="coinsDisplay" class="display-section">
                 <h2>Coins</h2>
-
+                <!-- Coins Display -->
                 <div class="container-fluid">
                     <form class="d-flex" role="search">
-                        <input id="searchBar" class="form-control me-2 rounded-pill p-2" type="search" placeholder="Search"
-                            aria-label="Search" />
-                        <button id="searchBtn" class="btn btn-outline-success rounded-pill" type="button">Search</button>
+                        <input id="searchBar" class="form-control me-2 rounded-pill p-2" type="search"
+                            placeholder="Search" aria-label="Search" />
+                        <button id="searchBtn" class="btn btn-outline-success rounded-pill"
+                            type="button">Search</button>
                     </form>
                 </div>
 
                 <div class="row g-4" id="coinsGrid"></div>
-
+                <!-- Live reports Display -->
                 <div id="liveReportsDisplay" class="display-section">
                     <!-- live reports -->
                 </div>
-
+                <!-- About Display -->
                 <div id="aboutDisplay" class="display-section">
                     <!-- about -->
                 </div>
@@ -103,7 +106,7 @@
 
     <script src="js/ui/Navigation.js"></script>
     <script src="js/Main.js" type="module"></script>
-    
+
 </body>
 
 </html>
