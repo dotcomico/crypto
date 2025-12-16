@@ -1,7 +1,7 @@
 export function filterCoins(coins, searchInput) {
   const searchText = searchInput.toLowerCase().trim();
   if (!searchText) {
-    return coins; 
+    return coins;
   }
   return coins.filter((coin) => {
     return (

@@ -18,7 +18,7 @@ $aboutNav.on("click", function () {
   showSection($aboutDisplay);
 });
 
-  function showSection(sectionToShow) {
-    $(".display-section").hide();
-    sectionToShow.show();
-  }
+function showSection(sectionToShow) {
+  $(".display-section").hide();
+  sectionToShow.show();
+}

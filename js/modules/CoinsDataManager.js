@@ -1,6 +1,5 @@
 import { CoinData } from "./CoinData.js";
 
-
 class CoinsDataManager {
   LS_KEY = "crypto_coins_data";
   coinsDataList = [];
@@ -30,7 +29,7 @@ class CoinsDataManager {
       console.log("מידע מטבעות - נטען");
     }
   }
- // שמירת נתונים לlocalStorege
+  // שמירת נתונים לlocalStorege
   saveListToLocal() {
     localStorage.setItem(this.LS_KEY, JSON.stringify(this.coinsDataList));
   }
@@ -58,9 +57,8 @@ class CoinsDataManager {
 
   // שליפה
   getCoinDataBySymbol(symbol) {
-      console.log(symbol + 'מידע התקבל  ');
+    console.log(symbol + "מידע התקבל  ");
     return this.coinsDataList.find((coin) => coin.symbol === symbol);
-    
   }
 
   isCoinInCache(symbol) {

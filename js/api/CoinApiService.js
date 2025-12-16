@@ -9,11 +9,8 @@ export function getCryptoCoins() {
     .then((data) => data.slice(0, 30));
 }
 
-
 // קבלת נתונים מורחבים למטבע בודד
 
 export function getCoinDetails(coinId) {
-  return fetch(API_COINS_DATA + coinId)
-    .then((res) => res.json());
+  return fetch(API_COINS_DATA + coinId).then((res) => res.json());
 }
-
