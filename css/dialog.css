@@ -22,7 +22,7 @@
 .dialog-box {
   background-color: #fff;
   padding: 20px;
-  border-radius: 8px;
+  border-radius: 25px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   width: 90%;
   max-width: 400px;
@@ -33,7 +33,7 @@
   max-width: 100px;
   height: auto;
   margin: 15px 0;
-  border-radius: 5px;
+  border-radius: 15px;
 }
 
 .cancel-button {
@@ -47,7 +47,7 @@
   font-size: 16px;
   margin-top: 15px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 15px;
   transition: background-color 0.3s;
 }
 
