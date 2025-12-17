@@ -31,12 +31,25 @@ $(() => {
     $coinsContainer.append(createErrorAlert(message));
   }
 
+  // --- Coin Search ---
   // טיפול בלחיצה על כפתור חיפוש מטבעות
   $("#searchBtn").on("click", function () {
     const filteredCoins = filterCoins(coins, $searchBar.val());
     renderCoins(filteredCoins, $coinsContainer);
   });
+  $searchBar.on("input", function () {
+    if ($(this).val() == "") {
+      renderCoins(coins, $coinsContainer);
+    }
+  });
+  $searchBar.on("change", function () {
+    if (!$(this).val() == "") {
+      const filteredCoins = filterCoins(coins, $searchBar.val());
+    renderCoins(filteredCoins, $coinsContainer);
+    }
+  });
 
+  // --- Dialog ---
   // טיפול בכפתור דיאלוג
   $("#cancel-button").on("click", function () {
     closeDialog();
