@@ -7,6 +7,8 @@ const $coinsDisplay = $("#coinsDisplay");
 const $liveReportsDisplay = $("#liveReportsDisplay");
 const $aboutDisplay = $("#aboutDisplay");
 
+showSection($coinsDisplay);
+
 // Events
 $coinsNav.on("click", function () {
   showSection($coinsDisplay);
