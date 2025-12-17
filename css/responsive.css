@@ -5,14 +5,18 @@
   }
 
   .background {
-    transform: translateZ(-12px) scale(3);
+    transform: translateZ(-12px) scale(2);
+    object-fit: cover;
+    object-position: top;
+    height: 170%;
+    width: 120%;
   }
 
   .title {
-    font-size: 5em; 
+    font-size: 5em;
   }
-  
+
   .inner-title {
-    font-size: 2em; 
+    font-size: 2em;
   }
 }
