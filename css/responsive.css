@@ -1,3 +1,4 @@
+/* רספונסיבי למסכים -גדולים  */
 @media (min-width: 768px) {
   #header {
     height: 70vh;
@@ -7,17 +8,11 @@
     transform: translateZ(-12px) scale(3);
   }
 
-  /* .foreground {
-  transform: translateZ(-2px) scale(1.2);
-  height: 60%;
-  width: 100%;
-    object-fit: contain;
-  object-position: left;
-} */
-
-  .title,
+  .title {
+    font-size: 5em; 
+  }
+  
   .inner-title {
-    color: white;
-    font-size: 5em;
+    font-size: 2em; 
   }
 }
