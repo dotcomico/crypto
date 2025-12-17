@@ -19,4 +19,29 @@
   .inner-title {
     font-size: 2em;
   }
+
+  /*  Live Reports */
+      #liveReportsDisplay {
+        grid-template-columns: 1fr 1.2fr; 
+        text-align: left; 
+        max-width: 1000px;
+        margin: 0 auto;
+        gap: 60px;
+    }
+
+    .info-container {
+        align-items: flex-start; 
+    }
+
+    h1 {
+        font-size: 2.8rem;
+    }
+
+    p {
+        font-size: 1.2rem;
+    }
+
+    .hero-image {
+        max-width: 450px;
+    }
 }
