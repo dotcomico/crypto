@@ -1,5 +1,7 @@
 import { CoinData } from "./CoinData.js";
 
+// data management service that caches detailed coin objects in local storage to enable efficient retrieval and persistent updates across browser sessions.
+
 class CoinsDataManager {
   LS_KEY = "crypto_coins_data";
   coinsDataList = [];
@@ -60,12 +62,8 @@ class CoinsDataManager {
     console.log(symbol + "מידע התקבל  ");
     return this.coinsDataList.find((coin) => coin.symbol === symbol);
   }
-
   isCoinInCache(symbol) {
-    // אם המתודה מחזירה אובייקט (כלומר, לא undefined), זה אומר שהמטבע קיים.
     return !!this.getCoinDataBySymbol(symbol);
-    // לחלופין, ניתן להשתמש ב-findIndex:
-    // return this.coinsDataList.findIndex(coin => coin.symbole === symbol) !== -1;
   }
 }
 

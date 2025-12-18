@@ -1,3 +1,5 @@
+// A data model class that encapsulates cryptocurrency details and includes built-in logic to validate data freshness based on a two-minute cache expiration policy.
+
 export class CoinData {
   static CACHE_TIMEOUT_MINUTES = 2;
   constructor(name, symbol, img, priceUSD, priceEUR, priceILS, time = null) {

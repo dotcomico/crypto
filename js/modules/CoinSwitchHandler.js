@@ -1,5 +1,8 @@
 import { reportCoinsManager } from "./ReportCoinsManager.js";
 
+// UI controller that creates and manages interactive toggles.
+
+// צור את איזור הסוויץ
 export function createSwitchSection(index, coinSymbol) {
   const switchDiv = $("<div>").addClass("form-check form-switch");
   const switchInput = $("<input>")
@@ -22,11 +25,13 @@ export function createSwitchSection(index, coinSymbol) {
   return switchDiv;
 }
 
+// עדכן מצב סוויץ
 function updateSwitchState(switchElement, coinSymbol) {
   const shouldBeChecked = reportCoinsManager.isInCache(coinSymbol);
   switchElement.prop("checked", shouldBeChecked);
 }
 
+// מנהל שינוי בסוויץ
 function handleSwitchChange(switchElement, coinSymbol) {
   const isNowChecked = switchElement.is(":checked");
   if (isNowChecked) {

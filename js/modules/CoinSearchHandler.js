@@ -1,3 +1,6 @@
+//Contains logic for filtering the coin dataset.
+
+// פעולת פילטר לרשימת מטבעות
 export function filterCoins(coins, searchInput) {
   const searchText = searchInput.toLowerCase().trim();
   if (!searchText) {

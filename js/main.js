@@ -4,6 +4,10 @@ import { renderCoins } from "./ui/CoinCardRenderer.js";
 import { createErrorAlert } from "./ui/ErrorAlert.js";
 import { closeDialog } from "./ui/MaxCoinsDialogManager.js";
 
+// Core controller for the Crypto Tracker application. 
+//  * Manages the application state, API data fetching, real-time search filtering, 
+//  * and global UI event listeners.
+
 $(() => {
   let coins = [];
   const $searchBar = $("#searchBar");
@@ -45,7 +49,7 @@ $(() => {
   $searchBar.on("change", function () {
     if (!$(this).val() == "") {
       const filteredCoins = filterCoins(coins, $searchBar.val());
-    renderCoins(filteredCoins, $coinsContainer);
+      renderCoins(filteredCoins, $coinsContainer);
     }
   });
 

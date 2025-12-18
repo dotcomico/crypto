@@ -1,6 +1,8 @@
 import { createSwitchSection } from "../modules/CoinSwitchHandler.js";
 import { closeInfo, showInfo } from "./CoinInfoDisplay.js";
 
+// Manages DOM manipulation for displaying coin cards.
+
 // רינדור רשימת מטבעות
 export function renderCoins(coins, container) {
   container.empty();

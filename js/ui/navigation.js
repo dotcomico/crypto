@@ -1,3 +1,7 @@
+
+// Handles Single Page Application style navigation.
+
+// Elements
 const $coinsNav = $("#coinsNav");
 const $LiveReportsNav = $("#LiveReportsNav");
 const $aboutNav = $("#aboutNav");
@@ -20,6 +24,7 @@ $aboutNav.on("click", function () {
   showSection($aboutDisplay);
 });
 
+// show single section and close the rest
 function showSection(sectionToShow) {
   $(".display-section").hide();
   sectionToShow.show();

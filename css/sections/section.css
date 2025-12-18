@@ -16,5 +16,4 @@ section {
     var(--primary-color) 100%        
   );
   backdrop-filter: blur(10px);
-  /* -webkit-backdrop-filter: blur(10px); */
 }

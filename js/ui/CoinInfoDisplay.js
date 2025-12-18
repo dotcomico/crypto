@@ -1,11 +1,8 @@
-// - createAndShowCollapse()
-// - creatExtendedData()
-// - setLoadingState()
-// - handleFetchError()
-
 import { getCoinDetails } from "../api/CoinApiService.js";
 import { CoinData } from "../modules/CoinData.js";
 import { coinsManager } from "../modules/CoinsDataManager.js";
+
+// Manages the retrieval and display of detailed coin information
 
 // סגירת מידע נוסף
 export function closeInfo(collapse, moreInfoBtn) {
@@ -29,6 +26,7 @@ export function showInfo(coin, inlineCard, moreInfoBtn) {
   }
 }
 
+// הצג מידע נוסף על מטבע
 function displayCoinData(coin, inlineCard, moreInfoBtn) {
   setLoadingState(moreInfoBtn);
 
@@ -57,7 +55,7 @@ function displayCoinData(coin, inlineCard, moreInfoBtn) {
   return collapse;
 }
 
-//מצב טעינה
+//מצב טעינה לכפתור
 function setLoadingState(moreInfoBtn) {
   moreInfoBtn.html(
     `<img src='Image/hourglass.gif' style="max-width: 20px;"> Loading...`
@@ -81,6 +79,17 @@ function handleFetchError(err, moreInfoBtn) {
   }, 3000);
 }
 
+// צור נוהצג נראות קריסה
+function createAndShowCollapse(coinData, inlineCard) {
+  const collapse = $("<div>").css("display", "none");
+  const collapseBody = creatExtendedData(coinData);
+  collapse.append(collapseBody);
+  inlineCard.append(collapse);
+  collapse.slideDown(300);
+  return collapse;
+}
+
+// צור נראות מורחבת להצגת מידע המטבע
 function creatExtendedData({
   name,
   symbol,
@@ -111,13 +120,4 @@ function creatExtendedData({
                         </div>
                     `);
   return extendedData;
-}
-
-function createAndShowCollapse(coinData, inlineCard) {
-  const collapse = $("<div>").css("display", "none");
-  const collapseBody = creatExtendedData(coinData);
-  collapse.append(collapseBody);
-  inlineCard.append(collapse);
-  collapse.slideDown(300);
-  return collapse;
 }

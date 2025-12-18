@@ -1,3 +1,6 @@
+
+// UI component for error notifications.
+
 export function createErrorAlert(message) {
   return $(`
     <div class="alert alert-danger text-center" role="alert">

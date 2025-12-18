@@ -1,5 +1,7 @@
 import { openDialog } from "../ui/MaxCoinsDialogManager.js";
 
+//  Service that manages a synchronized list of selected report coins in local storage
+
 class ReportCoinsManager {
   LS_KEY = "report_coins_data";
   LIMIT = 5;
