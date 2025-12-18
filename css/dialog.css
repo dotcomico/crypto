@@ -95,7 +95,7 @@
 }
 
 .dialog-coin-item:hover::after {
-  content: "לחץ להסרה והחלפה";
+  content: "Swap";
   position: absolute;
   top: 50%;
   right: 10px;
