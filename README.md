@@ -167,7 +167,7 @@ Then open `http://localhost:8000` (or the port your server prints).
 **Dotan Siman Tov**, Full-Stack Developer
 
 [![GitHub](https://img.shields.io/badge/GitHub-dotcomico-181717?style=flat-square&logo=github)](https://github.com/dotcomico)
-[![Email](https://img.shields.io/badge/Email-Dotanst100%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:Dotanst100@gmail.com)
+[![Email](https://img.shields.io/badge/Email-dotan.simantov.dev%40gmail.com-D14836?style=flat-square&logo=gmail&logoColor=white)](mailto:dotan.simantov.dev@gmail.com)
 
 ---
 
